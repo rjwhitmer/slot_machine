@@ -23,7 +23,13 @@ def pullLever(x):
 
 jackpot=0
 balance=round(0, 2)
-balance=float(input("Deposit money to play the slot machine! "))
+while balance==0:
+    try:
+        balance=float(input("Deposit money to play the slot machine! "))
+
+    except ValueError:
+        print("You can't deposit that!")
+
 while balance>0:
     x=0
     jackpot+=10
@@ -34,7 +40,7 @@ while balance>0:
     print()
     if bet>balance:
         i=input("Insufficient funds. Use remaining balance for bet? Y/N :")
-        if i=="y":
+        if i=="y" or i=="yes" or i=="Y":
             print("Your bet will be ", balance)
             print()
             print('------------------------')
@@ -43,9 +49,6 @@ while balance>0:
         else:
             continue
     
-    prize1=random.choice(symbols)
-    prize2=random.choice(symbols)
-    prize3=random.choice(symbols)
     
     
     #time.sleep(.5)
@@ -55,35 +58,34 @@ while balance>0:
         prize2=random.choice(symbols)
         prize3=random.choice(symbols)
 
-        #out=('\r'+'     '+ prize1+ '   '+ prize2+ '   '+ prize3+ '     ')
-        out=sys.stdout.write(str('\r'+'     '+ prize1+ '   '+ prize2+ '   '+ prize3+ '     '))
+        out=(prize1 + prize2 + prize3)
+        sys.stdout.write(str('\r'+'     '+ prize1+ '   '+ prize2+ '   '+ prize3+ '     '))
         sys.stdout.flush()
         time.sleep(.1)
     
     prize=str(out)
 
-    #print(out)
-    if '@' and '@' and '@' in prize:
+    if '@@@' == prize:
         print("\nHey! You won ",(bet*2))
         print()
         print('------------------------')
         balance=round((balance+(bet*2)), 2)
-    elif '$' and '$' and '$' in prize:
+    elif '$$$' == prize:
         print("\nWhoa! You won ",(bet*4))
         print()
         print('------------------------')
         balance=round(balance+(bet*4), 2)
-    elif '*' and '*' and '*' in prize:
+    elif '***' == prize:
         print("\nYowza! You won ",(bet*8))
         print()
         print('------------------------')
         balance=round(balance+(bet*8), 2)
-    elif '7' and '7' and '7' in prize:
+    elif '777' == prize:
         print("\nDING DING DING DING DING!!!! \nYOU WON THE JACKPOT OF ",jackpot)
         print()
         print('------------------------')
         balance=round((balance+jackpot), 2)
-    elif '@' and '$' and '*' in prize:
+    elif '@' in prize and '$' in prize and '*' in prize:
         print("\nYou won your bet! Not bad!")
         print()
         print('------------------------')
